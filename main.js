@@ -1,15 +1,12 @@
 $(function () {
     const icon = chrome.runtime.getURL('icons/icon.png');
-    let current_url = window.location.href;
-    if (current_url.includes("http://v3.torontomls.net/Live/Pages/Dynamic/Results.aspx?")) {
-        let interval = setInterval(function () {
-            if ($(".toolbar-item-topcma").length) {
-                clearInterval(interval);
-                $("#ctl00_ctl00_Content_DefaultToolbar").append('<li class="toolbar-item page-mode-view" style=""><button id="start_fast_offer" class="toolbar-button"><span class="toolbar-item-label">Start Fast Offer</span></button></li>');
-                $("#start_fast_offer").css("background-image", 'url(' + icon + ')');
-            }
-        }, 1000);
-    }
+    let interval = setInterval(function () {
+        if ($(".nav-path-node-current").length && $(".nav-path-node-current").text().includes("Detail View")) {
+            clearInterval(interval);
+            $("#ctl00_ctl00_Content_DefaultToolbar").append('<li class="toolbar-item page-mode-view" style=""><button id="start_fast_offer" class="toolbar-button"><span class="toolbar-item-label">Start Fast Offer</span></button></li>');
+            $("#start_fast_offer").css("background-image", 'url(' + icon + ')');
+        }
+    }, 1000);
 
     $("body").on("click", "#start_fast_offer", function () {
 
@@ -70,7 +67,7 @@ $(function () {
 
         $('#ReportContainer span.report-label').each(function () {
             let current_item = $(this);
-            let item_title = $(this).text();
+            let item_title = $(this).text().trim();
             if (current_item.next()) {
                 let item_value = current_item.next().text();
                 if (item_title == "[addr]:") {
@@ -155,7 +152,7 @@ $(function () {
                     parking_spots = item_value;
                 } else if (item_title == "Park $/Mo:") {
                     parking_cost = item_value;
-                } else if (item_title == "Pk Spot#:") {
+                } else if ((item_title == "Pk Spot#:") && !parkingnumber) {
                     parkingnumber = item_value;
                 } else if (item_title == "[legal_desc]:") {
                     legaldescription = item_value;
@@ -278,17 +275,21 @@ $(function () {
             "Commission": commission
         };
 
-        //alert(JSON.stringify(data));
+        chrome.runtime.sendMessage({
+            from: 'content',
+            subject: 'openUrl',
+            url: "https://beta.fastoffers.ca/?mls=" + mls
+        });
 
         $.ajax({
             url: "https://connect.pabbly.com/workflow/sendwebhookdata/IjE4MjM4MSI_3D",
             method: "POST",
             data: JSON.stringify(data),
             success: function (response) {
-                alert(JSON.stringify(response));
+                //alert(JSON.stringify(response));
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.responseText);
+                //alert(xhr.responseText);
             }
         });
         return false;

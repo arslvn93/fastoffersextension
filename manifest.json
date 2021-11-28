@@ -14,9 +14,14 @@
 
     "permissions": [
         "activeTab",
+        "tabs",
         "storage",
         "<all_urls>"
     ],
+
+    "background": {
+        "scripts": ["jquery.min.js", "background.js"]
+    },
 
     "content_scripts": [
         {
