@@ -13,20 +13,29 @@
     },
 
     "permissions": [
-        "activeTab",
         "tabs",
         "storage",
-        "<all_urls>"
+        "*://*.bey18ckvn0.execute-api.ca-central-1.amazonaws.com/*"
     ],
 
     "background": {
         "scripts": ["jquery.min.js", "background.js"]
     },
 
+    "browser_action": {
+        "default_title": "Start Fast Offer",
+        "default_icon": "icons/icon.png",
+        "default_popup": "popup/content.html"
+    },
+
     "content_scripts": [
         {
-            "matches": ["*://*.v3.torontomls.net/*"],
+            "matches": ["*://*.v3.torontomls.net/*", "*://*.app.realmmlp.ca/*"], 
             "js": ["jquery.min.js", "main.js"]
+        },
+        {
+            "matches": ["*://*.forms.ltd/*"],
+            "js": ["jquery.min.js", "get_user_id.js"]
         }
     ],
 

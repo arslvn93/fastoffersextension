@@ -1,0 +1,41 @@
+body {
+    width:120px;
+    height:100%;
+    text-align: center;
+}
+
+.popup_btn {
+    text-decoration:none;
+    background-color:#40D8A1;
+    color:#1F2937;
+    padding:7px;
+}
+
+#wrapper {
+    padding:10px;
+}
+
+#options_wrapper {
+    display: none;
+}
+
+#main_page_btn {
+    margin:0px auto;
+}
+
+#status_slider {
+    margin:0px auto;
+    text-align: center;
+}
+
+input[type=text], input[type=number] {
+    margin:5px;
+}
+
+#notification_message {
+    color:red;
+}
+
+#tasks {
+    min-width:250px;
+}
