@@ -388,29 +388,44 @@ $(function () {
 
         if (heat_incl == "Y") {
             heat_incl = 1;
+        } else if (heat_incl == "N") {
+            heat_incl = 0;
         }
         if (cable_tv_incl == "Y") {
             cable_tv_incl = 1;
+        } else if (cable_tv_incl == "N") {
+            cable_tv_incl = 0;
         }
         if (heat_incl == "Y") {
             heat_incl = 1;
+        } else if (heat_incl == "N") {
+            heat_incl = 0;
         }
         if (water_incl == "Y") {
             water_incl = 1;
+        } else if (water_incl == "N") {
+            water_incl = 0;
         }
         if (hydro_incl == "Y") {
             hydro_incl = 1;
+        } else if (hydro_incl == "N") {
+            hydro_incl = 0;
         }
         if (cac_incl == "Y") {
             cac_incl = 1;
+        } else if (cac_incl == "N") {
+            cac_incl = 0;
         }
         if (prkg_incl == "Y") {
             prkg_incl = 1;
+        } else if (prkg_incl == "N") {
+            prkg_incl = 0;
         }
         if (com_elem_incl == "Y") {
             com_elem_incl = 1;
+        } else if (com_elem_incl == "N") {
+            com_elem_incl = 0;
         }
-
 
         let title = "";
         if (unit) {
@@ -423,9 +438,9 @@ $(function () {
         lotwidth = parseInt(lotwidth);
         lotlength = parseInt(lotlength);
         parking_spots = parseInt(parking_spots);
-        
+
         taxyear = parseInt(taxyear);
-        
+
         taxes = taxes.replace("$", "").replace(",", "");
         taxes = parseFloat(taxes);
 
@@ -464,7 +479,7 @@ $(function () {
                 (class_value == "Parking Space")) {
             property_class = "Condo";
         }
-        
+
         let street_parts = address.split(" ");
         let street_number = street_parts[0];
         address = address.replace(street_number + " ", "");
