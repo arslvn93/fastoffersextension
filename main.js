@@ -386,6 +386,32 @@ $(function () {
             });
         }
 
+        if (heat_incl == "Y") {
+            heat_incl = 1;
+        }
+        if (cable_tv_incl == "Y") {
+            cable_tv_incl = 1;
+        }
+        if (heat_incl == "Y") {
+            heat_incl = 1;
+        }
+        if (water_incl == "Y") {
+            water_incl = 1;
+        }
+        if (hydro_incl == "Y") {
+            hydro_incl = 1;
+        }
+        if (cac_incl == "Y") {
+            cac_incl = 1;
+        }
+        if (prkg_incl == "Y") {
+            prkg_incl = 1;
+        }
+        if (com_elem_incl == "Y") {
+            com_elem_incl = 1;
+        }
+
+
         let title = "";
         if (unit) {
             title = unit + " - " + address;
@@ -397,32 +423,32 @@ $(function () {
         lotwidth = parseInt(lotwidth);
         lotlength = parseInt(lotlength);
         parking_spots = parseInt(parking_spots);
-        
+
         let has_locker;
-        if((locker == "Ensuite")||(locker == "Common")||(locker == "None")){
+        if ((locker == "Ensuite") || (locker == "Common") || (locker == "None")) {
             has_locker = 0;
         } else {
             has_locker = 1;
         }
-        
+
         let property_class = "";
-        if((class_value == "Att/Row/Twnhouse") ||
-           (class_value == "Cottage") ||
-           (class_value == "Detached") ||
-           (class_value == "Duplex") ||
-           (class_value == "Farm") ||
-           (class_value == "Fourplex") ||
-           (class_value == "Link") ||
-           (class_value == "Mobile/Trailer") ||
-           (class_value == "Multiplex") ||
-           (class_value == "Other") ||
-           (class_value == "Rural Resid") ||
-           (class_value == "Semi-Detached") ||
-           (class_value == "Store w/Apt/Offc") ||
-           (class_value == "Triplex") ||
-           (class_value == "Vacant Land")) {
+        if ((class_value == "Att/Row/Twnhouse") ||
+                (class_value == "Cottage") ||
+                (class_value == "Detached") ||
+                (class_value == "Duplex") ||
+                (class_value == "Farm") ||
+                (class_value == "Fourplex") ||
+                (class_value == "Link") ||
+                (class_value == "Mobile/Trailer") ||
+                (class_value == "Multiplex") ||
+                (class_value == "Other") ||
+                (class_value == "Rural Resid") ||
+                (class_value == "Semi-Detached") ||
+                (class_value == "Store w/Apt/Offc") ||
+                (class_value == "Triplex") ||
+                (class_value == "Vacant Land")) {
             property_class = "Freehold";
-        } else if((class_value == "Comm Element Condo") ||
+        } else if ((class_value == "Comm Element Condo") ||
                 (class_value == "Condo Apt") ||
                 (class_value == "Condo Townhouse") ||
                 (class_value == "Co-op Apt") ||
@@ -431,9 +457,9 @@ $(function () {
                 (class_value == "Leasehold Condo") ||
                 (class_value == "Locker") ||
                 (class_value == "Parking Space")) {
-                property_class = "Condo";
-            }
-                       
+            property_class = "Condo";
+        }
+
         let data = {
             "title": title,
             "mls": mls,
