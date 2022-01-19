@@ -459,6 +459,10 @@ $(function () {
                 (class_value == "Parking Space")) {
             property_class = "Condo";
         }
+        
+        let street_parts = address.split(" ");
+        let street_number = street_parts[0];
+        address = address.replace(street_number + " ", "");
 
         let data = {
             "title": title,
@@ -493,7 +497,7 @@ $(function () {
             "parking_unit": parkingunit,
             "address": {
                 "street_name": address,
-                "street_number": "",
+                "street_number": street_number,
                 "city_name": city,
                 "postal_code": zip
             },
