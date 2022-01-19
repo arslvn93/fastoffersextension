@@ -19,3 +19,10 @@ chrome.runtime.onMessage.addListener(function (msg, sender, response) {
         chrome.tabs.create({url: msg.url, active: true}, function (tab) {});
     }
 });
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if (changeInfo.url) {
+        chrome.tabs.sendMessage(tabId, {from: 'background', subject: 'changedUrl'});
+    }
+});
+
