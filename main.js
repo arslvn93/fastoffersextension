@@ -423,6 +423,11 @@ $(function () {
         lotwidth = parseInt(lotwidth);
         lotlength = parseInt(lotlength);
         parking_spots = parseInt(parking_spots);
+        
+        taxyear = parseInt(taxyear);
+        
+        taxes = taxes.replace("$", "").replace(",", "");
+        taxes = parseFloat(taxes);
 
         let has_locker;
         if ((locker == "Ensuite") || (locker == "Common") || (locker == "None")) {
