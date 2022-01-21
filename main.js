@@ -484,10 +484,31 @@ $(function () {
         let street_number = street_parts[0];
         address = address.replace(street_number + " ", "");
 
+        let maintenances_array = [];
+        if (cable_tv_incl) {
+            maintenances_array.push({"name": "Cable TV"});
+        }
+        if (hydro_incl) {
+            maintenances_array.push({"name": "Hydro"});
+        }
+        if (cac_incl) {
+            maintenances_array.push({"name": "Air Conditioning"});
+        }
+        if (com_elem_incl) {
+            maintenances_array.push({"name": "Common Element"});
+        }
+        if (heat_incl) {
+            maintenances_array.push({"name": "Heat"});
+        }
+        if (water_incl) {
+            maintenances_array.push({"name": "Water"});
+        }
+
+        let maintenances = JSON.stringify({"maintenances": maintenances_array});
+
         let data = {
             "title": title,
             "mls": mls,
-            "mls_number": mls,
             "offer": type_value,
             "fax": brokerage_fax,
             "commission": commission,
@@ -506,7 +527,7 @@ $(function () {
             "agent_title": agent_type,
             "agent_number": agent_number,
             "listing_brokerage_street": brokerage_address_street,
-            "listing_brokerage_city": brokerage_address_city,
+            "isting_brokerage_city": brokerage_address_city,
             "listing_brokerage_zip": brokerage_address_postal_code,
             "parking_inc": prkg_incl,
             "corporation_jurisdiction": corp,
@@ -522,18 +543,19 @@ $(function () {
                 "city_name": city,
                 "postal_code": zip
             },
-            "style": class2_value,
+            "property_class_two": class2_value,
             "locker_level": lockerlevel,
             "locker_unit": lockerunit,
             "locker_number": lockernumber,
             "parking_cost": parking_cost,
             "parking_number": parkingnumber,
-            "maintenance_fee": maintenance,
+            "maintenance_fees": maintenance,
+            "maintenances": maintenances,
             "tax": taxes,
             "tax_year": taxyear,
             "legal_description": legaldescription,
             "acres": acres,
-            "fronting_on": front,
+            "front": front,
             "lot_front": lotwidth,
             "lot_depth": lotlength,
             "irregular": irregular,
