@@ -527,7 +527,7 @@ $(function () {
             "agent_title": agent_type,
             "agent_number": agent_number,
             "listing_brokerage_street": brokerage_address_street,
-            "isting_brokerage_city": brokerage_address_city,
+            "listing_brokerage_city": brokerage_address_city,
             "listing_brokerage_zip": brokerage_address_postal_code,
             "parking_inc": prkg_incl,
             "corporation_jurisdiction": corp,
