@@ -504,8 +504,6 @@ $(function () {
             maintenances_array.push({"name": "Water"});
         }
 
-        let maintenances = JSON.stringify({"maintenances": maintenances_array});
-
         let data = {
             "title": title,
             "mls": mls,
@@ -527,7 +525,7 @@ $(function () {
             "agent_title": agent_type,
             "agent_number": agent_number,
             "listing_brokerage_street": brokerage_address_street,
-            "listing_brokerage_city": brokerage_address_city,
+            "isting_brokerage_city": brokerage_address_city,
             "listing_brokerage_zip": brokerage_address_postal_code,
             "parking_inc": prkg_incl,
             "corporation_jurisdiction": corp,
@@ -543,19 +541,19 @@ $(function () {
                 "city_name": city,
                 "postal_code": zip
             },
-            "style": class2_value,
+            "property_class_two": class2_value,
             "locker_level": lockerlevel,
             "locker_unit": lockerunit,
             "locker_number": lockernumber,
             "parking_cost": parking_cost,
             "parking_number": parkingnumber,
-            "maintenance_fee": maintenance,
-            "maintenances": maintenances,
+            "maintenance_fees": maintenance,
+            "maintenances": maintenances_array,
             "tax": taxes,
             "tax_year": taxyear,
             "legal_description": legaldescription,
             "acres": acres,
-            "fronting_on": front,
+            "front": front,
             "lot_front": lotwidth,
             "lot_depth": lotlength,
             "irregular": irregular,
