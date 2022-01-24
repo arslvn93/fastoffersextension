@@ -232,6 +232,13 @@ $(function () {
             address = address_parts2[0].trim();
             unit = address_parts2[1].trim();
             city = address_data_parts1[1].trim();
+            if (address_data_parts1[2]) {
+                let zip_parts = address_data_parts1[2].trim().split(" ");
+                let total_zip_parts = zip_parts.length;
+                zip = zip_parts[total_zip_parts - 2] + " " + zip_parts[total_zip_parts - 1];
+            }
+
+            class_value = $(".d99m14 .d99m15").eq(0).text();
 
             mls = $(".d100m18").text().trim();
             mls = mls.replace("MLS®#:", "").trim();
@@ -259,6 +266,56 @@ $(function () {
                         if (included_items.includes("Cable TV")) {
                             cable_tv_incl = 1;
                         }
+                    }
+                }
+            });
+
+            $(".d99m23 .label").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Seller:") {
+                        seller = item_value;
+                    }
+                }
+            });
+            
+            $(".d107m14 .label").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Buyer Agency Compensation Remarks:") {
+                        commission = item_value;
+                    }
+                }
+            });
+
+            $(".d107m3").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "List Salesperson:") {
+                        agent = item_value;
+                    } else if (item_title == "List Brokerage:") {
+                        brokerage = item_value.replace(", Brokerage", "").trim();
+                        
+                    }
+                }
+            });
+            
+            $(".d107m8").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Brkge #:") {
+                        brokerage_phone = item_value;
+                    } else if (item_title == "L/SP Cell:") {
+                        agent_number =  item_value;
+                        
                     }
                 }
             });
