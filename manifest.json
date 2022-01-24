@@ -30,7 +30,7 @@
 
     "content_scripts": [
         {
-            "matches": ["*://*.v3.torontomls.net/*", "*://*.app.realmmlp.ca/*"], 
+            "matches": ["*://*.v3.torontomls.net/*", "*://*.app.realmmlp.ca/*", "*://*.matrix.itsorealestate.ca/*"], 
             "js": ["jquery.min.js", "main.js"]
         },
         {

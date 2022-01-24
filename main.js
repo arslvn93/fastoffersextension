@@ -8,7 +8,6 @@ $(function () {
     load_realmmlp_button();
 
     $("body").on("click", "#start_fast_offer", function () {
-
         let address = "";
         let mls = "";
         let city = "";
@@ -225,6 +224,44 @@ $(function () {
                     brokerage_address_street = brokerage_address.replace(brokerage_address_city + " " + brokerage_address_postal_code, "");
                 }
             }
+        } else if (current_url.includes("matrix.itsorealestate.ca")) {
+            let address_data1 = $("#wrapperTable .d-mega").eq(0).text();
+            let address_data_parts1 = address_data1.split(",");
+            let address_temp = address_data_parts1[0].trim();
+            let address_parts2 = address_temp.split("Unit #");
+            address = address_parts2[0].trim();
+            unit = address_parts2[1].trim();
+            city = address_data_parts1[1].trim();
+
+            mls = $(".d100m18").text().trim();
+            mls = mls.replace("MLS®#:", "").trim();
+
+            let type_value_temp = $("tr.d100m13").eq(1).find(".d100m22").eq(0).text().trim();
+            if (type_value_temp) {
+                let type_value_parts = type_value_temp.split("/");
+                type_value = type_value_parts[1].trim();
+            }
+
+            $(".d132m38").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Tenant Pays:") {
+                        let included_text = item_value;
+                        let included_items = included_text.split(", ");
+                        if (included_items.includes("Hydro")) {
+                            hydro_incl = 1;
+                        }
+                        if (included_items.includes("Heat")) {
+                            heat_incl = 1;
+                        }
+                        if (included_items.includes("Cable TV")) {
+                            cable_tv_incl = 1;
+                        }
+                    }
+                }
+            });
         } else {
 
             $('#ReportContainer span.report-label').each(function () {
@@ -525,7 +562,7 @@ $(function () {
             "agent_title": agent_type,
             "agent_number": agent_number,
             "listing_brokerage_street": brokerage_address_street,
-            "listing_brokerage_city": brokerage_address_city,
+            "isting_brokerage_city": brokerage_address_city,
             "listing_brokerage_zip": brokerage_address_postal_code,
             "parking_inc": prkg_incl,
             "corporation_jurisdiction": corp,
@@ -541,19 +578,19 @@ $(function () {
                 "city_name": city,
                 "postal_code": zip
             },
-            "style": class2_value,
+            "property_class_two": class2_value,
             "locker_level": lockerlevel,
             "locker_unit": lockerunit,
             "locker_number": lockernumber,
             "parking_cost": parking_cost,
             "parking_number": parkingnumber,
-            "maintenance_fee": maintenance,
+            "maintenance_fees": maintenance,
             "maintenances": maintenances_array,
             "tax": taxes,
             "tax_year": taxyear,
             "legal_description": legaldescription,
             "acres": acres,
-            "fronting_on": front,
+            "front": front,
             "lot_front": lotwidth,
             "lot_depth": lotlength,
             "irregular": irregular,
@@ -597,7 +634,7 @@ function load_realmmlp_button() {
     const icon = chrome.runtime.getURL('icons/icon.png');
     const button = '<button id="start_fast_offer" class="realmmlp_button"><span class="toolbar-item-label">Start Fast Offer</span></button>';
     let interval = setInterval(function () {
-        if (($(".nav-path-node-current").length && $(".nav-path-node-current").text().includes("Detail View")) || $("#section-overview .price").length) {
+        if (($(".nav-path-node-current").length && $(".nav-path-node-current").text().includes("Detail View")) || $("#section-overview .price").length || $("#m_tblActionMenu").length) {
             clearInterval(interval);
             if (!$("#start_fast_offer").length) {
                 if ($("#section-overview .price").length) {
@@ -609,6 +646,8 @@ function load_realmmlp_button() {
                     $(".realmmlp_button").css("border", "1px solid #555A5D");
                     $(".realmmlp_button").css("border-radius", "5.6px");
                     $(".realmmlp_button").css("font-size", "12px");
+                } else if ($("#m_tblActionMenu").length) {
+                    $("#m_tblActionMenu tr").eq(0).append('<td id="start_fast_offer" class="link important barleft enabled" title=""><a href="#"><span class="linkIcon icon_Custom" style="background-image:url(Images/DisplayIcons/IconShowingTimeCustom.png);">Start Fast Offer</span></a></td>');
                 } else {
                     $("#ctl00_ctl00_Content_DefaultToolbar").append('<li class="toolbar-item page-mode-view" style=""><button id="start_fast_offer" class="toolbar-button"><span class="toolbar-item-label">Start Fast Offer</span></button></li>');
                     $("#start_fast_offer").css("background-image", 'url(' + icon + ')');
