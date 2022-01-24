@@ -43,6 +43,7 @@ $(function () {
         let agent = "";
         let agent_type = "";
         let agent_number = "";
+        let agent_email = "";
         let commission = "";
         let unit = "";
         let corp = "";
@@ -280,7 +281,7 @@ $(function () {
                     }
                 }
             });
-            
+
             $(".d107m14 .label").each(function () {
                 let current_item = $(this);
                 let item_title = $(this).text().trim();
@@ -301,11 +302,12 @@ $(function () {
                         agent = item_value;
                     } else if (item_title == "List Brokerage:") {
                         brokerage = item_value.replace(", Brokerage", "").trim();
-                        
+                    } else if (item_title == "Email:") {
+                        agent_email = item_value;
                     }
                 }
             });
-            
+
             $(".d107m8").each(function () {
                 let current_item = $(this);
                 let item_title = $(this).text().trim();
@@ -314,8 +316,8 @@ $(function () {
                     if (item_title == "Brkge #:") {
                         brokerage_phone = item_value;
                     } else if (item_title == "L/SP Cell:") {
-                        agent_number =  item_value;
-                        
+                        agent_number = item_value;
+
                     }
                 }
             });
@@ -618,6 +620,7 @@ $(function () {
             "heat_inc": heat_incl,
             "agent_title": agent_type,
             "agent_number": agent_number,
+            "agent_email": agent_email,
             "listing_brokerage_street": brokerage_address_street,
             "isting_brokerage_city": brokerage_address_city,
             "listing_brokerage_zip": brokerage_address_postal_code,
