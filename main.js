@@ -270,6 +270,20 @@ $(function () {
                     }
                 }
             });
+            
+            $(".d210m3").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Legal Desc:") {
+                        let legal_temp = item_value;
+                        let legal_parts = legal_temp.split(",");
+                        legalunit = legal_parts[0].replace("UNIT", "").trim();
+                        legallevel = legal_parts[1].replace("LEVEL", "").trim();
+                    }
+                }
+            });
 
             $(".d99m23 .label").each(function () {
                 let current_item = $(this);
