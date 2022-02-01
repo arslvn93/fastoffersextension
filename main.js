@@ -8,6 +8,7 @@ $(function () {
     load_realmmlp_button();
 
     $("body").on("click", "#start_fast_offer", function () {
+
         let address = "";
         let mls = "";
         let city = "";
@@ -231,7 +232,9 @@ $(function () {
             let address_temp = address_data_parts1[0].trim();
             let address_parts2 = address_temp.split("Unit #");
             address = address_parts2[0].trim();
-            unit = address_parts2[1].trim();
+            if (address_parts2[1]) {
+                unit = address_parts2[1].trim();
+            }
             city = address_data_parts1[1].trim();
             if (address_data_parts1[2]) {
                 let zip_parts = address_data_parts1[2].trim().split(" ");
@@ -239,81 +242,16 @@ $(function () {
                 zip = zip_parts[total_zip_parts - 2] + " " + zip_parts[total_zip_parts - 1];
             }
 
-            //class_value = $(".d99m14 .d99m15").eq(0).text();
+            class_value = $(".d99m14 .d99m15").eq(0).text();
 
             mls = $(".d100m18").text().trim();
             mls = mls.replace("MLS®#:", "").trim();
 
-            //Purchase or Lease
             let type_value_temp = $("tr.d100m13").eq(1).find(".d100m22").eq(0).text().trim();
             if (type_value_temp) {
                 let type_value_parts = type_value_temp.split("/");
-                let type_item = "";
-                type_item = type_value_parts[1].trim();
-                 if (type_item == "Residential"){
-                    type_value = "Sale";
-                } else if (type_item == "Resendential Lease"){
-                    type_value = "Lease";
-                }
+                type_value = type_value_parts[1].trim();
             }
-
-            class2_value = $(".d99m17").eq(0).text();
-
-            $(".d102m4").each(function () {
-                let current_item = $(this);
-                let item_title = $(this).text().trim();
-                if (current_item.next()) {
-                    let item_value = current_item.next().text();
-                    if (item_title == "Common Interest:") {
-                        class_value = item_value;
-                    } else if (item_title == "Tax Amt/Yr:") {
-                        let tax_temp = item_value;
-                        let tax_parts = tax_temp.split("/");
-                        taxes = tax_parts[0].trim();
-                        taxyear = tax_parts[1].trim();
-                    }
-                }
-            });
-            
-
-            $(".d144m5").each(function () {
-                let current_item = $(this);
-                let item_title = $(this).text().trim();
-                if (current_item.next()) {
-                    let item_value = current_item.next().text();
-                    if (item_title == "Condo Corp #:") {
-                        corp = item_value;
-                    }
-                }
-            });
-        
-
-            $(".d144m5").each(function () {
-                let current_item = $(this);
-                let item_title = $(this).text().trim();
-                if (current_item.next()) {
-                    let item_value = current_item.next().text();
-                    if (item_title == "Condo Corp #:") {
-                        corp = item_value;
-                    }
-                }
-            });
-
-          
-            $(".d55m20").each(function () {
-                let current_item = $(this);
-                let item_title = $(this).text().trim();
-                if (current_item.next()) {
-                    let item_value = current_item.next().text();
-                    if (item_title == "Fronting On:") {
-                        front = item_value;
-                    }
-                }
-            });
-
-
-            
-
 
             $(".d132m38").each(function () {
                 let current_item = $(this);
@@ -336,6 +274,22 @@ $(function () {
                 }
             });
 
+            $(".d210m3").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Legal Desc:") {
+                        let legal_temp = item_value;
+                        let legal_parts = legal_temp.split(",");
+                        legalunit = legal_parts[0].replace("UNIT", "").trim();
+                        if (legal_parts[1]) {
+                            legallevel = legal_parts[1].replace("LEVEL", "").trim();
+                        }
+                    }
+                }
+            });
+
             $(".d99m23 .label").each(function () {
                 let current_item = $(this);
                 let item_title = $(this).text().trim();
@@ -344,67 +298,6 @@ $(function () {
                     if (item_title == "Seller:") {
                         seller = item_value;
                     }
-                }
-            });
-
-            $(".d210m3").each(function () {
-                let current_item = $(this);
-                let item_title = $(this).text().trim();
-                if (current_item.next()) {
-                    let item_value = current_item.next().text();
-                    if (item_title == "Legal Desc:") {
-                        let legal_temp = item_value;
-                        legaldescription = legal_temp;
-                        let legal_parts = legal_temp.split(",");
-                        legalunit = legal_parts[0].replace("UNIT", "").trim();
-                        legallevel = legal_parts[1].replace("LEVEL", "").trim();
-                        legal_desc = legal_temp;
-                    }
-                }
-            });
-
-            $(".d144m3").each(function () {
-                let current_item = $(this);
-                let item_title = $(this).text().trim();
-                if (current_item.next()) {
-                    let item_value = current_item.next().text();
-                    if (item_title == "Condo Fees:") {
-                        let main_temp = item_value;
-                        let main_parts = main_temp.split("/");
-                        maintenance = main_parts[0].replace("$", "").trim();
-
-                    } else if (item_title == "Locker:") {
-                        locker_type = item_value;
-                        let locker_data = item_value;
-                        let locker_data_parts = locker_data.split("/");
-                        locker = locker_data_parts[0].trim();
-                        lockernumber = locker_data_parts[1].trim();
-                    }
-                    else if (item_title == "Condo Fees Incl:") {
-                        let condo_fees_text = item_value;
-                        let condo_fees_items = condo_fees_text.split(", ");
-                        if (condo_fees_items.includes("Hydro")) {
-                            hydro_incl = 1;
-                        }
-                        if (condo_fees_items.includes("Heat")) {
-                            heat_incl = 1;
-                        }
-                        if (condo_fees_items.includes("Cable TV")) {
-                            cable_tv_incl = 1;
-                        }
-                        if (condo_fees_items.includes("Common Elements")) {
-                            com_elem_incl = 1;
-                        }
-                        if (condo_fees_items.includes("Central Air Conditioning")) {
-                            cac_incl = 1;
-                        }
-                        if (condo_fees_items.includes("Water")) {
-                            water_incl = 1;
-                        }
-
-                    }
-
-
                 }
             });
 
@@ -418,33 +311,6 @@ $(function () {
                     }
                 }
             });
-
-            $(".d55m16").each(function () {
-                let current_item = $(this);
-                let item_title = $(this).text().trim();
-                if (current_item.next()) {
-                    let item_value = current_item.next().text();
-                    if (item_title == "Parking Spaces:") {
-                        parking_spots = item_value;
-                    } else if (item_title == "Parking Level/Unit:") {
-                        parking_unit = item_value;
-                    }
-                }
-            });
-
-            $(".d55m32").each(function () {
-                let current_item = $(this);
-                let item_title = $(this).text().trim();
-                if (current_item.next()) {
-                    let item_value = current_item.next().text();
-                    if (item_title == "Cooling:") {
-                        ac = item_value;
-                    } else if (item_title == "Heating:") {
-                        heat_source = item_value;
-                    }
-                }
-            });
-
 
             $(".d107m3").each(function () {
                 let current_item = $(this);
@@ -693,9 +559,8 @@ $(function () {
         taxes = taxes.replace("$", "").replace(",", "");
         taxes = parseFloat(taxes);
 
-        
         let has_locker;
-        if ((locker == "Ensuite") || (locker == "Common") || (locker == "None")|| (locker == "")) {
+        if ((locker == "Ensuite") || (locker == "Common") || (locker == "None")) {
             has_locker = 0;
         } else {
             has_locker = 1;
@@ -703,32 +568,30 @@ $(function () {
 
         let property_class = "";
         if ((class_value == "Att/Row/Twnhouse") ||
-            (class_value == "Freehold/None") ||
-            (class_value == "Cottage") ||
-            (class_value == "Detached") ||
-            (class_value == "Duplex") ||
-            (class_value == "Farm") ||
-            (class_value == "Fourplex") ||
-            (class_value == "Link") ||
-            (class_value == "Mobile/Trailer") ||
-            (class_value == "Multiplex") ||
-            (class_value == "Other") ||
-            (class_value == "Rural Resid") ||
-            (class_value == "Semi-Detached") ||
-            (class_value == "Store w/Apt/Offc") ||
-            (class_value == "Triplex") ||
-            (class_value == "Vacant Land")) {
+                (class_value == "Cottage") ||
+                (class_value == "Detached") ||
+                (class_value == "Duplex") ||
+                (class_value == "Farm") ||
+                (class_value == "Fourplex") ||
+                (class_value == "Link") ||
+                (class_value == "Mobile/Trailer") ||
+                (class_value == "Multiplex") ||
+                (class_value == "Other") ||
+                (class_value == "Rural Resid") ||
+                (class_value == "Semi-Detached") ||
+                (class_value == "Store w/Apt/Offc") ||
+                (class_value == "Triplex") ||
+                (class_value == "Vacant Land")) {
             property_class = "Freehold";
         } else if ((class_value == "Comm Element Condo") ||
-            (class_value == "Condo Apt") ||
-            (class_value == "Condominium") ||
-            (class_value == "Condo Townhouse") ||
-            (class_value == "Co-op Apt") ||
-            (class_value == "Co-Ownership Apt") ||
-            (class_value == "Det Condo") ||
-            (class_value == "Leasehold Condo") ||
-            (class_value == "Locker") ||
-            (class_value == "Parking Space")) {
+                (class_value == "Condo Apt") ||
+                (class_value == "Condo Townhouse") ||
+                (class_value == "Co-op Apt") ||
+                (class_value == "Co-Ownership Apt") ||
+                (class_value == "Det Condo") ||
+                (class_value == "Leasehold Condo") ||
+                (class_value == "Locker") ||
+                (class_value == "Parking Space")) {
             property_class = "Condo";
         }
 
@@ -738,22 +601,22 @@ $(function () {
 
         let maintenances_array = [];
         if (cable_tv_incl) {
-            maintenances_array.push({ "name": "Cable TV" });
+            maintenances_array.push({"name": "Cable TV"});
         }
         if (hydro_incl) {
-            maintenances_array.push({ "name": "Hydro" });
+            maintenances_array.push({"name": "Hydro"});
         }
         if (cac_incl) {
-            maintenances_array.push({ "name": "Air Conditioning" });
+            maintenances_array.push({"name": "Air Conditioning"});
         }
         if (com_elem_incl) {
-            maintenances_array.push({ "name": "Common Element" });
+            maintenances_array.push({"name": "Common Element"});
         }
         if (heat_incl) {
-            maintenances_array.push({ "name": "Heat" });
+            maintenances_array.push({"name": "Heat"});
         }
         if (water_incl) {
-            maintenances_array.push({ "name": "Water" });
+            maintenances_array.push({"name": "Water"});
         }
 
         let data = {
@@ -778,7 +641,7 @@ $(function () {
             "agent_number": agent_number,
             "agent_email": agent_email,
             "listing_brokerage_street": brokerage_address_street,
-            "listing_brokerage_city": brokerage_address_city,
+            "isting_brokerage_city": brokerage_address_city,
             "listing_brokerage_zip": brokerage_address_postal_code,
             "parking_inc": prkg_incl,
             "corporation_jurisdiction": corp,
@@ -794,19 +657,19 @@ $(function () {
                 "city_name": city,
                 "postal_code": zip
             },
-            "style": class2_value,
+            "property_class_two": class2_value,
             "locker_level": lockerlevel,
             "locker_unit": lockerunit,
             "locker_number": lockernumber,
             "parking_cost": parking_cost,
             "parking_number": parkingnumber,
-            "maintenance_fee": maintenance,
+            "maintenance_fees": maintenance,
             "maintenances": maintenances_array,
             "tax": taxes,
             "tax_year": taxyear,
             "legal_description": legaldescription,
             "acres": acres,
-            "fronting_on": front,
+            "front": front,
             "lot_front": lotwidth,
             "lot_depth": lotlength,
             "irregular": irregular,
