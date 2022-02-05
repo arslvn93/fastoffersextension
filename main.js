@@ -363,7 +363,9 @@ $(function () {
 
             $(".d132m38").each(function () {
                 let current_item = $(this);
-                let item_title = $(this).text().trim();
+                let item_title = current_item.text().trim();
+                let item_title_html = current_item.html();
+
                 if (current_item.next()) {
                     let item_value = current_item.next().text();
                     if (item_title == "Tenant Pays:") {
@@ -384,7 +386,7 @@ $(function () {
                         if (included_items.includes("Common Elements")) {
                             cable_tv_incl = 0;
                         }
-                    } else if (item_title == "Owner Pays:") {
+                    } else if (item_title_html.includes("Owner&nbsp;Pays:")) {
                         let notincluded_text = item_value;
                         let notincluded_items = notincluded_text.split(", ");
                         if (notincluded_items.includes("Hydro")) {
@@ -401,6 +403,18 @@ $(function () {
                         }
                         if (notincluded_items.includes("Common Elements")) {
                             cable_tv_incl = 1;
+                        }
+                    } else if (item_title == "Ownership:") {
+                        if (item_value == "Condominium") {
+                            class_value = "condo";
+                        } else if (item_value == "Freehold:") {
+                            class_value = "freehold";
+                        } else {
+                            if (class2_value.includes("Condo")) {
+                                class_value = "condo";
+                            } else {
+                                class_value = "freehold";
+                            }
                         }
                     }
                 }
