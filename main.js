@@ -795,6 +795,7 @@ $(function () {
 
         let property_class = "";
         if (
+                class_value == "freehold" ||
                 class_value == "Att/Row/Twnhouse" ||
                 class_value == "Freehold/None" ||
                 class_value == "Cottage" ||
@@ -814,6 +815,7 @@ $(function () {
                 ) {
             property_class = "Freehold";
         } else if (
+                class_value == "condo" ||
                 class_value == "Comm Element Condo" ||
                 class_value == "Condo Apt" ||
                 class_value == "Condominium" ||
