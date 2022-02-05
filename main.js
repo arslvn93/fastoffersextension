@@ -264,6 +264,8 @@ $(function () {
                     .eq(0)
                     .text()
                     .trim();
+            
+            alert(type_value_temp);
 
             if (type_value_temp) {
                 let type_value_parts = type_value_temp.split("/");
@@ -271,7 +273,7 @@ $(function () {
                 type_item = type_value_parts[1].trim();
                 if (type_item == "Residential") {
                     type_value = "Sale";
-                } else if (type_item == "Resendential Lease") {
+                } else if (type_item == "Residential Lease") {
                     type_value = "Lease";
                 }
             }
