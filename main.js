@@ -264,8 +264,6 @@ $(function () {
                     .eq(0)
                     .text()
                     .trim();
-            
-            alert(type_value_temp);
 
             if (type_value_temp) {
                 let type_value_parts = type_value_temp.split("/");
@@ -409,7 +407,7 @@ $(function () {
                     } else if (item_title == "Ownership:") {
                         if (item_value == "Condominium") {
                             class_value = "condo";
-                        } else if (item_value == "Freehold:") {
+                        } else if (item_value == "Freehold") {
                             class_value = "freehold";
                         } else {
                             if (class2_value.includes("Condo")) {
@@ -470,7 +468,9 @@ $(function () {
                         let locker_data = item_value;
                         let locker_data_parts = locker_data.split("/");
                         locker = locker_data_parts[0].trim();
-                        lockernumber = locker_data_parts[1].trim();
+                        if (locker_data_parts[1]) {
+                            lockernumber = locker_data_parts[1].trim();
+                        }
                     } else if (item_title == "Condo Fees Incl:") {
                         let condo_fees_text = item_value;
                         let condo_fees_items = condo_fees_text.split(", ");
