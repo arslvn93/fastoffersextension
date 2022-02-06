@@ -409,16 +409,18 @@ $(function () {
                             class_value = "condo";
                         } else if (item_value == "Freehold") {
                             class_value = "freehold";
-                        } else {
-                            if (class2_value.includes("Condo")) {
-                                class_value = "condo";
-                            } else {
-                                class_value = "freehold";
-                            }
                         }
                     }
                 }
             });
+
+            if (!class_value) {
+                if (class2_value.includes("Condo")) {
+                    class_value = "condo";
+                } else {
+                    class_value = "freehold";
+                }
+            }
 
             $(".d99m23 .label").each(function () {
                 let current_item = $(this);
