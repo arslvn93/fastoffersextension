@@ -433,6 +433,19 @@ $(function () {
                 }
             });
 
+            if (!seller){
+            $(".d99m24 .label").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Seller:") {
+                        seller = item_value;
+                    }
+                }
+            });
+        }
+
             $(".d210m3").each(function () {
                 let current_item = $(this);
                 let item_title = $(this).text().trim();
@@ -976,7 +989,7 @@ function load_realmmlp_button() {
                     $("#m_tblActionMenu tr")
                             .eq(0)
                             .append(
-                                    '<td id="start_fast_offer" class="link important barleft enabled" title=""><a href="#"><span class="linkIcon icon_Custom" style="background-image:url(Images/DisplayIcons/IconShowingTimeCustom.png);">Start Fast Offer</span></a></td>'
+                                    '<td id="start_fast_offer" class="link important barleft enabled" title=""><a href="#"><span class="linkIcon icon_cma" style="background-image:url(Images/icons/cma.png);">Start Fast Offer</span></a></td>'
                                     );
                 } else {
                     $("#ctl00_ctl00_Content_DefaultToolbar").append(
