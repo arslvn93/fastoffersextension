@@ -30,6 +30,7 @@ $(function () {
         let commission = "";
         let corp = "";
         let corpnumber = "";
+        let exclusions = "";
         let front = "";
         let furnished = "";
         let heat = "";
@@ -37,6 +38,8 @@ $(function () {
         let heat_source = "";
         let hydro_incl = 0;
         let irregular = "";
+        let inclusions = "";
+        let inclusions_two = "";
         let laundry = "";
         let legaldescription = "";
         let legallevel = "";
@@ -48,6 +51,7 @@ $(function () {
         let lotlength = "";
         let lotwidth = "";
         let maintenance = "";
+        let maintenances_array = [];
         let mls = "";
         let parking = "";
         let parking_cost = "";
@@ -62,6 +66,8 @@ $(function () {
         let taxyear = "";
         let type_value = "";
         let unit = "";
+        let under_contract_rental = "";
+        let under_contract_cost = "";
         let water_incl = 0;
         let zip = "";
 
@@ -345,8 +351,8 @@ $(function () {
                         heat = heat_parts[0].trim();
                         if (heat_parts[1]) {
                             heat_source = heat_parts[1].trim();
-                        }
-                    }
+                        } }
+                   
                 }
             });
 
@@ -549,10 +555,30 @@ $(function () {
                         heat = heat_parts[0].trim();
                         if (heat_parts[1]) {
                             heat_source = heat_parts[1].trim();
-                        }
+                        }}
+                    else if (item_title == "Under Contract:") {
+                        under_contract_rental = item_value;
+                    } else if (item_title == "Inclusions:") {
+                        inclusions = item_value;
+                    } else if (item_title == "Add Inclusions:") {
+                        inclusions_two = item_value;
+                    } else if (item_title == "Exclusions:") {
+                        exclusions = item_value;
                     }
                 }
             });
+
+            $(".d55m40 .label").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Contract Cost/Mo:") {
+                        under_contract_cost = item_value;
+                    }
+                }
+            });
+
 
             $(".d107m3").each(function () {
                 let current_item = $(this);
@@ -851,7 +877,7 @@ $(function () {
         let street_number = street_parts[0];
         address = address.replace(street_number + " ", "");
 
-        let maintenances_array = [];
+        
         if (cable_tv_incl) {
             maintenances_array.push({name: "Cable TV"});
         }
@@ -890,6 +916,7 @@ $(function () {
             commission: commission,
             corporation_jurisdiction: corp,
             corporation_number: corpnumber,
+            exclusions:exclusions,
             fax: brokerage_fax,
             fronting_on: front,
             furnished: furnished,
@@ -899,6 +926,8 @@ $(function () {
             heat_type: heat,
             hydro_inc: hydro_incl,
             irregular: irregular,
+            inclusions:inclusions,
+            inclusions_two:inclusions_two,
             laundry_type: laundry,
             legal_description: legaldescription,
             legal_level: legallevel,
@@ -933,6 +962,8 @@ $(function () {
             tax_year: taxyear,
             title: title,
             unit_name: unit,
+            under_contract_rental:under_contract_rental,
+            under_contract_cost:under_contract_cost,
             water_inc: water_incl,
         };
 
