@@ -515,8 +515,11 @@ $(function () {
                             water_incl = 1;
                         }
 
-                        for (let i = 0; i <= condo_fees_items.length; i++) {
-                            maintenances_array.push({name: condo_fees_items[i].trim()});
+                        if (condo_fees_items.length) {
+                            for (let i = 0; i <= condo_fees_items.length; i++) {
+                                let condo_fee_value = condo_fees_items[i];
+                                maintenances_array.push({name: condo_fee_value});
+                            }
                         }
                     }
                 }
@@ -881,22 +884,22 @@ $(function () {
         let street_number = street_parts[0];
         address = address.replace(street_number + " ", "");
 
-        if (cable_tv_incl && !maintenances_array.includes('{name: "Cable TV"}')) {
+        if (cable_tv_incl) {
             maintenances_array.push({name: "Cable TV"});
         }
-        if (hydro_incl && !maintenances_array.includes('{name: "Hydro"}')) {
+        if (hydro_incl) {
             maintenances_array.push({name: "Hydro"});
         }
-        if (cac_incl && !maintenances_array.includes('{name: "Air Conditioning"}')) {
+        if (cac_incl) {
             maintenances_array.push({name: "Air Conditioning"});
         }
-        if (com_elem_incl && !maintenances_array.includes('{name: "Common Element"}')) {
+        if (com_elem_incl) {
             maintenances_array.push({name: "Common Element"});
         }
-        if (heat_incl && !maintenances_array.includes('{name: "Heat"}')) {
+        if (heat_incl) {
             maintenances_array.push({name: "Heat"});
         }
-        if (water_incl && !maintenances_array.includes('{name: "Water"}')) {
+        if (water_incl) {
             maintenances_array.push({name: "Water"});
         }
 
