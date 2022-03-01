@@ -15,6 +15,8 @@ $(function () {
         let agent_email = "";
         let agent_number = "";
         let agent_type = "";
+        let building_insurance = "";
+        let bldg_ins_incl = 0;
         let brokerage = "";
         let brokerage_address_city = "";
         let brokerage_address_postal_code = "";
@@ -30,6 +32,7 @@ $(function () {
         let commission = "";
         let corp = "";
         let corpnumber = "";
+        let exposure = "";
         let exclusions = "";
         let front = "";
         let furnished = "";
@@ -655,6 +658,8 @@ $(function () {
                         hydro_incl = item_value;
                     } else if (item_title == "Cable TV Incl:") {
                         cable_tv_incl = item_value;
+                    } else if (item_title == "Bldg Ins Incl:") {
+                        building_insurance = item_value;
                     } else if (item_title == "CAC Incl:") {
                         cac_incl = item_value;
                     } else if (item_title == "Prkg Incl:") {
@@ -691,6 +696,8 @@ $(function () {
                         brokerage_address_postal_code = item_value;
                     } else if (item_title == "Lndry Acc:") {
                         laundry = item_value;
+                    } else if (item_title == "Exposure:") {
+                        exposure = item_value;
                     } else if (item_title == "For:") {
                         type_value = item_value;
                     } else if (item_title == "[type_own1_out]:") {
@@ -777,6 +784,11 @@ $(function () {
             heat_incl = 1;
         } else if (heat_incl == "N") {
             heat_incl = 0;
+        }
+        if (building_insurance == "Y") {
+            bldg_ins_incl = 1;
+        } else if (building_insurance == "N") {
+            bldg_ins_incl = 0;
         }
         if (cable_tv_incl == "Y") {
             cable_tv_incl = 1;
@@ -915,6 +927,8 @@ $(function () {
             agent_email: agent_email,
             agent_number: agent_number,
             agent_title: agent_type,
+            building_insurance: building_insurance,
+            bldg_ins_incl: bldg_ins_incl,
             brokerage: brokerage,
             cable_tv_inc: cable_tv_incl,
             cac_inc: cac_incl,
@@ -922,6 +936,7 @@ $(function () {
             commission: commission,
             corporation_jurisdiction: corp,
             corporation_number: corpnumber,
+            exposure:exposure,
             exclusions: exclusions,
             fax: brokerage_fax,
             fronting_on: front,
