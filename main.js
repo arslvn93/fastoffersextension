@@ -181,20 +181,23 @@ $(function () {
                             .find("li")
                             .each(function () {
                                 let item_value = $(this).text();
-                                if (item_value == "Parking") {
-                                    prkg_incl = 1;
-                                } else if (item_value == "Hydro") {
-                                    hydro_incl = 1;
-                                } else if (item_value == "Central AC") {
-                                    cac_incl = 1;
-                                } else if (item_value == "Common Elements") {
-                                    com_elem_incl = 1;
-                                } else if (item_value == "Water") {
-                                    water_incl = 1;
-                                } else if (item_value == "Cable TV") {
-                                    cable_tv_incl = 1;
-                                } else if (item_value == "Heat") {
-                                    heat_incl = 1;
+                                let item_class = $(this).attr("class");
+                                if (!item_class || (item_class != "not-included")) {
+                                    if (item_value == "Parking") {
+                                        prkg_incl = 1;
+                                    } else if (item_value == "Hydro") {
+                                        hydro_incl = 1;
+                                    } else if (item_value == "Central AC") {
+                                        cac_incl = 1;
+                                    } else if (item_value == "Common Elements") {
+                                        com_elem_incl = 1;
+                                    } else if (item_value == "Water") {
+                                        water_incl = 1;
+                                    } else if (item_value == "Cable TV") {
+                                        cable_tv_incl = 1;
+                                    } else if (item_value == "Heat") {
+                                        heat_incl = 1;
+                                    }
                                 }
                             });
                 }
@@ -936,7 +939,7 @@ $(function () {
             commission: commission,
             corporation_jurisdiction: corp,
             corporation_number: corpnumber,
-            exposure:exposure,
+            exposure: exposure,
             exclusions: exclusions,
             fax: brokerage_fax,
             fronting_on: front,
