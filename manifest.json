@@ -1,8 +1,8 @@
 {
 
     "manifest_version": 3,
-    "name": "Start Fast Offer",
-    "version": "1.0",
+    "name": "Fast Offers Booster",
+    "version": "1.1",
 
     "description": "",
 
@@ -15,7 +15,7 @@
     "permissions": [
         "storage"
     ],
-    
+
     "host_permissions": [
         "*://*.bey18ckvn0.execute-api.ca-central-1.amazonaws.com/*"
     ],
@@ -24,15 +24,11 @@
         "service_worker": "background.js"
     },
 
-    "action": {
-        "default_title": "Start Fast Offer",
-        "default_icon": "icons/icon.png",
-        "default_popup": "popup/content.html"
-    },
+    "action": {},
 
     "content_scripts": [
         {
-            "matches": ["*://*.v3.torontomls.net/*", "*://*.app.realmmlp.ca/*", "*://*.matrix.itsorealestate.ca/*"], 
+            "matches": ["*://*.v3.torontomls.net/*", "*://*.realmmlp.ca/*", "*://*.matrix.itsorealestate.ca/*"], 
             "js": ["jquery.min.js", "main.js"]
         },
         {
