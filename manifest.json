@@ -28,7 +28,7 @@
 
     "content_scripts": [
         {
-            "matches": ["*://*.v3.torontomls.net/*", "*://*.realmmlp.ca/*", "*://*.matrix.itsorealestate.ca/*"], 
+            "matches": ["*://*.v3.torontomls.net/*", "*://*.realmmlp.ca/*", "*://*.matrix.itsorealestate.ca/*", "*://*.trreb.mlxmatrix.com/*"], 
             "js": ["jquery.min.js", "main.js"]
         },
         {

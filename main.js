@@ -620,7 +620,558 @@ $(function () {
                     }
                 }
             });
-        } else {
+        } else if (current_url.includes("trreb.mlxmatrix.com")) {
+            let address_data1 = $("#wrapperTable .d-mega").eq(0).text();
+            let address_data_parts1 = address_data1.split(",");
+            let address_temp = address_data_parts1[0].trim();
+            let address_parts2 = address_temp.split("Unit #");
+            address = address_parts2[0].trim();
+            if (address_parts2[1]) {
+                unit = address_parts2[1].trim();
+            }
+            city = address_data_parts1[1].trim();
+            if (address_data_parts1[2]) {
+                let zip_parts = address_data_parts1[2].trim().split(" ");
+                let total_zip_parts = zip_parts.length;
+                zip =
+                        zip_parts[total_zip_parts - 2] + " " + zip_parts[total_zip_parts - 1];
+            }
+            mls = $(".d93m21").text().trim();
+            mls = mls.replace("MLS®#:", "").trim();
+
+            //Purchase or Lease
+            let type_value_temp = $("tr.d93m23")
+                    .eq(1)
+                    .find(".d93m20")
+                    .eq(0)
+                    .text()
+                    .trim();
+
+            if (type_value_temp) {
+                let type_value_parts = type_value_temp.split("/");
+                let type_item = "";
+                type_item = type_value_parts[1].trim();
+                if (type_item == "Residential Condo & Other") {
+                    type_value = "Sale";
+                    class_value = "condo";
+                } else if (type_item == "Residential Condo & Other Lease") {
+                    type_value = "Lease";
+                    class_value = "condo";
+                } else if (type_item == "Residential Freehold") {
+                    type_value = "Sale";
+                    class_value = "freehold";
+                } else if (type_item == "Residential Freehold Lease") {
+                    type_value = "Lease";
+                    class_value = "freehold";
+                }
+            }
+
+            $(".d27m8 .label").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Seller:") {
+                        seller = item_value;
+                    }
+                }
+            });
+
+            //Freehold Sale
+            $(".d101m4").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Lot Irreg:") {
+                        irregular = item_value;
+                    } else if (item_title == "Lot Front:") {
+                        lotwidth = item_value;
+                    } else if (item_title.includes("Lot Depth:")) {
+                        lotlength = item_value;
+                    } else if (item_title == "Tax Amt/Yr:") {
+                        let tax_temp = item_value;
+                        let tax_parts = tax_temp.split("/");
+                        taxes = tax_parts[0].trim();
+                        taxyear = tax_parts[1].trim();
+                    } else if (item_title == "Legal Desc:") {
+                        let legal_temp = item_value;
+                        legaldescription = legal_temp;
+                        let legal_parts = legal_temp.split(",");
+                        legalunit = legal_parts[0].replace("UNIT", "").trim();
+                        if (legal_parts[1]) {
+                            legallevel = legal_parts[1].replace("LEVEL", "").trim();
+                            if (legal_parts[2]) {
+                                let legal_corp = legal_parts[2].split(".");
+                                if (legal_corp[1]) {
+                                    corp = legal_corp[0].replace("NO", "").trim();
+                                    corpnumber = legal_corp[1].trim();
+                                }
+                            }
+                        }
+                    } else if (item_title == "Style:") {
+                        class2_value = item_value;
+                    }
+                }
+            });
+            
+            $(".d101m6").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Lot Acres:") {
+                        acres = item_value;
+                    } else if (item_title == "Fronting On:") {
+                        front = item_value;
+                    }
+                }
+            });
+
+            $(".d102m3").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                     if (item_title == "Heat:") {
+                        let heat_parts = item_value.split(",");
+                        heat = heat_parts[0].trim();
+                        if (heat_parts[1]) {
+                            heat_source = heat_parts[1].trim();
+                        }
+                    } else if (item_title == "A/C:") {
+                        let heat_parts = item_value.split("/");
+                        ac = heat_parts[1].trim();
+                    } 
+                }
+            });
+
+            $(".d102m11").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Tot Pk Spcs:") {
+                        parking_spots = item_value;
+                    }
+                }
+            });
+
+      
+
+            //Condo Sale
+
+            $(".d116m4").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Tax Amt/Yr:") {
+                        let tax_temp = item_value;
+                        let tax_parts = tax_temp.split("/");
+                        taxes = tax_parts[0].trim();
+                        taxyear = tax_parts[1].trim();
+                    } else if (item_title == "Legal Level:") {
+                        legallevel = item_value;
+                    } else if (item_title == "Corp #:") {
+                        corpnumber = item_value;
+                    } else if (item_title.includes("Reg Office:")) {
+                        corp = item_value;
+                    } else if (item_title == "Style:") {
+                        class2_value = item_value;
+                    }else if (item_title == "Locker:") {
+                        locker = item_value;
+                    }else if (item_title == "Locker Level:") {
+                        lockerlevel = item_value;
+                    }else if (item_title == "Locker #:") {
+                        lockernumber = item_value;
+                    }else if (item_title == "Locker Unit #:") {
+                        lockerunit = item_value;
+                    }
+                    
+                }
+            });
+
+            $(".d116m6").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Legal Unit:") {
+                        legalunit = item_value;
+                    } else if (item_title == "Lot Acres:") {
+                        acres = item_value;
+                    } else if (item_title == "Fronting On:") {
+                        front = item_value;
+                    }
+                }
+            });
+
+
+            $(".d117m3").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Exposure:") {
+                        exposure = item_value;
+                    
+                    } else if (item_title == "Heat:") {
+                        let heat_parts = item_value.split(",");
+                        heat = heat_parts[0].trim();
+                        if (heat_parts[1]) {
+                            heat_source = heat_parts[1].trim();
+                        }
+                    }
+                }
+            });
+
+            $(".d117m5").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Maintenance:") {
+                        maintenance = item_value;
+                    } else if (item_title == "Com Elem Inc:") {
+                        com_elem_incl = item_value;
+                    } else if (item_title == "A/C:") {
+                        let heat_parts = item_value.split("/");
+                        ac = heat_parts[1].trim();
+                    } else if (item_title == "Included:") {
+                        let included_text = item_value;
+                        let included_items = included_text.split(", ");
+                        if (included_items.includes("Hydro")) {
+                            hydro_incl = 1;
+                        }
+                        if (included_items.includes("Heating")) {
+                            heat_incl = 1;
+                        }
+                        if (included_items.includes("Cable TV")) {
+                            cable_tv_incl = 1;
+                        }
+                        if (included_items.includes("Water")) {
+                            water_incl = 1;
+                        }
+                        if (included_items.includes("CAC")) {
+                            cac_incl = 1;
+                        }
+                        if (included_items.includes("Building Insurance")) {
+                            building_insurance = 1;
+                        }
+                    }
+                }
+            });
+
+            $(".d117m7").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                    if (item_title == "Laundry Acc:") {
+                        laundry = item_value;
+                    } else if (item_title == "Park Type") {
+                        parking = item_value;
+                    }else if (item_title == "Tot Pk Spcs:") {
+                        parking_spots = item_value;
+                    }else if (item_title == "Park Spot 1/2:") {
+                        parkingnumber = item_value;
+                    }else if (item_title == "Park Lvl/Unit:") {
+                        parking_level = item_value;
+                    }else if (item_title == "Park Type:") {
+                        parking_type = item_value;
+                    }
+                }
+            });
+
+        //Condo Lease
+
+        $(".d119m4").each(function () {
+            let current_item = $(this);
+            let item_title = $(this).text().trim();
+            if (current_item.next()) {
+                let item_value = current_item.next().text();
+                
+                 if (item_title == "Legal Level:") {
+                    legallevel = item_value;
+                } else if (item_title == "Corp #:") {
+                    corpnumber = item_value;
+                } else if (item_title.includes("Reg Office:")) {
+                    corp = item_value;
+                } else if (item_title == "Locker:") {
+                    locker = item_value;
+                }else if (item_title == "Locker Level:") {
+                    lockerlevel = item_value;
+                }else if (item_title == "Locker #:") {
+                    lockernumber = item_value;
+                }else if (item_title == "Locker Unit #:") {
+                    lockerunit = item_value;
+                }
+                
+            }
+        });
+
+        $(".d119m6").each(function () {
+            let current_item = $(this);
+            let item_title = $(this).text().trim();
+            if (current_item.next()) {
+                let item_value = current_item.next().text();
+                if (item_title == "Legal Unit:") {
+                    legalunit = item_value;
+                } else if (item_title == "Lot Acres:") {
+                    acres = item_value;
+                } else if (item_title == "Fronting On:") {
+                    front = item_value;
+                }
+            }
+        });
+
+
+        $(".d120m8").each(function () {
+            let current_item = $(this);
+            let item_title = $(this).text().trim();
+            if (current_item.next()) {
+                let item_value = current_item.next().text();
+                if (item_title == "Exposure:") {
+                    exposure = item_value;
+                } else if (item_title == "Heat:") {
+                    let heat_parts = item_value.split(",");
+                    heat = heat_parts[0].trim();
+                    if (heat_parts[1]) {
+                        heat_source = heat_parts[1].trim();
+                    }
+                } else if (item_title == "Laundry Acc:") {
+                    laundry = item_value;
+                }
+            }
+        });
+
+        $(".d120m12").each(function () {
+            let current_item = $(this);
+            let item_title = $(this).text().trim();
+            if (current_item.next()) {
+                let item_value = current_item.next().text();
+                if (item_title == "Locker:") {
+                    locker = item_value;
+                } else if (item_title == "Com Elem Inc:") {
+                    com_elem_incl = item_value;
+                }else if (item_title == "Furnished:") {
+                    furnished = item_value;
+                } else if (item_title == "A/C:") {
+                    let heat_parts = item_value.split("/");
+                    ac = heat_parts[1].trim();
+                } else if (item_title == "Included:") {
+                    let included_text = item_value;
+                    let included_items = included_text.split(", ");
+                    if (included_items.includes("Hydro")) {
+                        hydro_incl = 1;
+                    }
+                    if (included_items.includes("Heating")) {
+                        heat_incl = 1;
+                    }
+                    if (included_items.includes("Cable TV")) {
+                        cable_tv_incl = 1;
+                    }
+                    if (included_items.includes("Water")) {
+                        water_incl = 1;
+                    }
+                    if (included_items.includes("CAC")) {
+                        cac_incl = 1;
+                    }
+                    if (included_items.includes("Building Insurance")) {
+                        building_insurance = 1;
+                    }
+                    if (included_items.includes("All Inclusive")) {
+                        building_insurance = 1;
+                        cac_incl = 1;
+                        water_incl = 1;
+                        cable_tv_incl = 1;
+                        heat_incl = 1;
+                        hydro_incl = 1;
+                    }
+                }
+            }
+        }); 
+
+        $(".d120m20").each(function () {
+            let current_item = $(this);
+            let item_title = $(this).text().trim();
+            if (current_item.next()) {
+                let item_value = current_item.next().text();
+                if (item_title == "Park Cost/Mo:") {
+                    parking_cost = item_value;
+                } else if (item_title == "Park Type") {
+                    parking = item_value;
+                }else if (item_title == "Tot Pk Spcs:") {
+                    parking_spots = item_value;
+                }else if (item_title == "Park Spot 1/2:") {
+                    parkingnumber = item_value;
+                }else if (item_title == "Park Lvl/Unit:") {
+                    parking_level = item_value;
+                }else if (item_title == "Park Type:") {
+                    parking_type = item_value;
+                }
+            }
+        });
+
+           //Freehold Lease
+
+           $(".d110m4").each(function () {
+            let current_item = $(this);
+            let item_title = $(this).text().trim();
+            if (current_item.next()) {
+                let item_value = current_item.next().text();
+                if (item_title == "Lot Front:") {
+                    lotwidth = item_value;
+                } else if (item_title.includes("Lot Depth:")) {
+                    lotlength = item_value;
+                } else if (item_title == "Style:") {
+                    class2_value = item_value;
+                }
+            }
+        });
+
+        $(".d110m6").each(function () {
+            let current_item = $(this);
+            let item_title = $(this).text().trim();
+            if (current_item.next()) {
+                let item_value = current_item.next().text();
+                 if (item_title == "Fronting On:") {
+                    front = item_value;
+                }
+            }
+        });
+
+
+
+        $(".d120m8").each(function () {
+            let current_item = $(this);
+            let item_title = $(this).text().trim();
+            if (current_item.next()) {
+                let item_value = current_item.next().text();
+                 if (item_title == "Heat:") {
+                    let heat_parts = item_value.split(",");
+                    heat = heat_parts[0].trim();
+                    if (heat_parts[1]) {
+                        heat_source = heat_parts[1].trim();
+                    }
+                } else if (item_title == "A/C:") {
+                    let heat_parts = item_value.split("/");
+                    ac = heat_parts[1].trim();
+                } 
+            }
+        });
+
+        $(".d111m11").each(function () {
+            let current_item = $(this);
+            let item_title = $(this).text().trim();
+            if (current_item.next()) {
+                let item_value = current_item.next().text();
+                if (item_title == "Park Cost/Mo:") {
+                    parking_cost = item_value;
+                } else if (item_title == "Tot Pk Spcs:") {
+                    parking_spots = item_value;
+                }else if (item_title == "Laundry Acc:") {
+                    laundry = item_value;
+                }
+            }
+        });
+
+        $(".d111m14").each(function () {
+            let current_item = $(this);
+            let item_title = $(this).text().trim();
+            if (current_item.next()) {
+                let item_value = current_item.next().text();
+                if (item_title == "Furnished:") {
+                    furnished = item_value;
+                } else if (item_title == "Com Elem Inc:") {
+                    com_elem_incl = item_value;
+                } else if (item_title == "Included:") {
+                    let included_text = item_value;
+                    let included_items = included_text.split(", ");
+                    if (included_items.includes("Hydro")) {
+                        hydro_incl = 1;
+                    }
+                    if (included_items.includes("Heating")) {
+                        heat_incl = 1;
+                    }
+                    if (included_items.includes("Cable TV")) {
+                        cable_tv_incl = 1;
+                    }
+                    if (included_items.includes("Water")) {
+                        water_incl = 1;
+                    }
+                    if (included_items.includes("CAC")) {
+                        cac_incl = 1;
+                    }
+                    if (included_items.includes("Building Insurance")) {
+                        building_insurance = 1;
+                    }
+                    if (included_items.includes("All Inclusive")) {
+                        building_insurance = 1;
+                        cac_incl = 1;
+                        water_incl = 1;
+                        cable_tv_incl = 1;
+                        heat_incl = 1;
+                        hydro_incl = 1;
+                    }
+                }
+            }
+        }); 
+
+
+
+        //Brokerage Info
+
+            $(".d98m3").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                     if (item_title == "List Brokerage:") {
+                        brokerage = item_value.replace(", Brokerage", "").trim();
+                     }
+                     else if (item_title == "List Salesperson:") {
+                        agent = item_value;
+                    }
+                    } else if (item_title == "List Brkr Addr:") {
+                        listing_brokerage_street = item_value;
+                    }
+                
+            });
+
+            $(".d98m8").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                     if (item_title == "Phone:") {
+                        brokerage_phone = item_value;
+                     }
+                     else if (item_title == "Fax:") {
+                        brokerage_fax = item_value;
+                    }
+                    } 
+                
+            });
+
+            $(".d98m5").each(function () {
+                let current_item = $(this);
+                let item_title = $(this).text().trim();
+                if (current_item.next()) {
+                    let item_value = current_item.next().text();
+                     if (item_title == "CB Comm:") {
+                        commission = item_value;
+                     }
+                     
+                    } 
+                
+            });
+
+
+
+        
+     } else {
             $("#ReportContainer span.report-label").each(function () {
                 let current_item = $(this);
                 let item_title = $(this).text().trim();
