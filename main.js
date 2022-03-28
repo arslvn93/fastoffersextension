@@ -1521,24 +1521,12 @@ $(function () {
             water_inc: water_incl
         };
 
-        chrome.storage.local.get(["user_id"], function (storage_data) {
-            let user_id = "";
-            if (storage_data["user_id"] && storage_data["user_id"] != "undefined")
-                user_id = storage_data["user_id"];
-
-            let url = "https://beta.fastoffers.ca/?s=ext&mls=" + mls + "&user=";
-            if (user_id) {
-                url += user_id;
-            } else {
-                url += "demo";
-            }
-
-            chrome.runtime.sendMessage({
-                from: "content",
-                subject: "openUrl",
-                url: url,
-                data: data,
-            });
+        let url = "https://forms.ltd/startoffer?s=ext&mls=" + mls;
+        chrome.runtime.sendMessage({
+            from: "content",
+            subject: "openUrl",
+            url: url,
+            data: data,
         });
 
         return false;

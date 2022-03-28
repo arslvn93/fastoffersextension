@@ -12,10 +12,6 @@
         "128": "icons/icon128.png"
     },
 
-    "permissions": [
-        "storage"
-    ],
-
     "host_permissions": [
         "*://*.bey18ckvn0.execute-api.ca-central-1.amazonaws.com/*"
     ],
@@ -30,10 +26,6 @@
         {
             "matches": ["*://*.v3.torontomls.net/*", "*://*.realmmlp.ca/*", "*://*.matrix.itsorealestate.ca/*", "*://*.trreb.mlxmatrix.com/*"], 
             "js": ["jquery.min.js", "main.js"]
-        },
-        {
-            "matches": ["*://*.forms.ltd/*"],
-            "js": ["jquery.min.js", "get_user_id.js"]
         }
     ],
 
